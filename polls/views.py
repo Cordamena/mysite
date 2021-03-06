@@ -13,6 +13,7 @@ def index(request):
     }
     return render(request, "polls/index.html", context)
 
+
 def meme(request):
     return HttpResponse("<img src='https://management30.com/wp-content/uploads/2016/03/change-management-dead.jpg'>")
 
