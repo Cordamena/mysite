@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 # Create your views here.
 
 from .models import Question, Choice
@@ -26,9 +27,21 @@ def detail(request, q_id):
     return render(request, "polls/detail.html", context )
 
 def results(request, q_id):
-    res = "Result fot Question number %s." % q_id
-    return HttpResponse(res)
+    question = Question.objects.get(pk=q_id)
+    context = {
+        "question" : question
+    }
+    return render(request, "polls/results.html", context )
+    
 
 def vote(request, q_id):
-    res = "Vote fot Question number %s." % q_id
-    return HttpResponse(res)
+    choices = request.POST.getlist("choice")
+    question = Question.objects.get(pk=q_id)
+
+    res = ""
+    for c_pk in choices:
+        choice = question.choice_set.get(pk=c_pk)
+        choice.votes += 1
+        choice.save()
+
+    return HttpResponseRedirect( reverse("polls:results", args=(q_id, )) )

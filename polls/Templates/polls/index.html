@@ -10,7 +10,7 @@
     {% if questions %}
     <ol>
         {% for q in question %}
-        <li> <a href="/polls/{{q.pk}}/">{{q.text}}</a></li>
+        <li> <a href="{% url 'polls:detail' q.pk %}">{{q.text}}</a></li>
         {% endfor %}
     </ol>
     {% endif %}
