@@ -9,7 +9,7 @@
 <body>
     {% if questions %}
     <ol>
-        {% for q in question %}
+        {% for q in questions %}
         <li> <a href="{% url 'polls:detail' q.pk %}">{{q.text}}</a></li>
         {% endfor %}
     </ol>
